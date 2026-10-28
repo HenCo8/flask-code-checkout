@@ -3,17 +3,17 @@ pipeline {
     agent any
 
     parameters {
-        string(
-            name: 'NAME',
-            defaultValue: 'Daniel',
-            description: 'Enter your name'
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'stage', 'prod'],
+            description: 'Select an environment'
         )
     }
 
     stages {
-        stage('Greeting') {
+        stage('Environment') {
             steps {
-                echo "Hello ${params.NAME}!"
+                echo "Selected environment: ${params.ENVIRONMENT}"
             }
         }
     }
