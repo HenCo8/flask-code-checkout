@@ -3,17 +3,26 @@ pipeline {
     agent any
 
     parameters {
-        choice(
-            name: 'ENVIRONMENT',
-            choices: ['dev', 'stage', 'prod'],
-            description: 'Select an environment'
+        booleanParam(
+            name: 'RUN_TESTS',
+            defaultValue: true,
+            description: 'Run tests?'
         )
     }
 
     stages {
-        stage('Environment') {
+        stage('Build') {
             steps {
-                echo "Selected environment: ${params.ENVIRONMENT}"
+                echo 'Building the application...'
+            }
+        }
+
+        stage('Tests') {
+            when {
+                expression { return params.RUN_TESTS }
+            }
+            steps {
+                echo 'Running tests...'
             }
         }
     }
